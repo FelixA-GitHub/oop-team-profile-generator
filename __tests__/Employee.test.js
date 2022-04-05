@@ -1,4 +1,4 @@
-const Employee = require('../lib/Employee');
+const Employee = require('../lib/employee');
 
 //employee is like potion from rpg 
 
