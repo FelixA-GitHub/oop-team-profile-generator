@@ -10,8 +10,8 @@ const fs = require('fs');
 let team = [];
 
 //array of questions for user input
+//manager questions
 const questions = [
-    //enter the team manager’s name, employee ID, email address, and office number
     {
         type: 'input',
         name: 'name',
