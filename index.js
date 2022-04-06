@@ -1,8 +1,13 @@
 //packages need for this application
+const Employee = require('./lib/employee');
+const Engineer = require('./lib/engineer');
+const Intern = require('./lib/intern');
+const Manager = require('./lib/manager');
 const inquirer = require('inquirer');
 const fs = require('fs');
-const { writeFile, copyFile } = require('./utils/generate-site.js');
 
+//variables
+let team = [];
 
 //array of questions for user input
 const questions = [
@@ -60,19 +65,12 @@ const questions = [
         }
     },
     {
-        type: 'menu',
-        name: 'option',
+        type: 'list',
+        name: 'role',
         message: 'Would you like to add an employee?',
-        choices: ['Engineer', 'Intern', 'None'],
-        validate: offNumInput => {
-            if(offNumInput) {
-                return true;
-            } else {
-                console.log('Please provide your office number!');
-                return false;
-            }
-        }
-    },  
+        choices: ['Engineer', 'Intern', 'None']
+        
+    }  
 
 ]
 
