@@ -1,7 +1,5 @@
 const Employee = require('../lib/employee');
 
-//employee is like potion from rpg 
-
 test('creates an employee object', () => {
     const testEmp = 'Felix';
     const emp = new Employee(testEmp);
