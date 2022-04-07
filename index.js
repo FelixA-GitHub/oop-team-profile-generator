@@ -85,8 +85,7 @@ const employeeQuestions = () => {
                     type: 'list',
                     name: 'addEmp',
                     message: 'Would you like to add an Engineer, Intern, or Finish with team building?',
-                    choices: ['Engineer', 'Intern', 'Finish'],
-                    
+                    choices: ['Engineer', 'Intern', 'Finish']
 
                 }
             ])
