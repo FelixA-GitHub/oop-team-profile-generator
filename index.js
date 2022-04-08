@@ -77,16 +77,102 @@ const managerQuestions = () => {
     }
 
 //employeeQuestions
-// const employeeQuestions = () => {
-//     return new Promise((resolve, reject) => {
-//         inquirer
-//             .prompt([
-//                 {
-//                     type: 'list',
-//                     name: 'addEmp',
-//                     message: 'Would you like to add an Engineer, Intern, or Finish with team building?',
-//                     choices: ['Engineer', 'Intern', 'Finish']  
-//                 },
-//             ])
-//     })}
+const employeeQuestions = () => {
+    // return new Promise((resolve, reject) => {
+        inquirer
+            .prompt([
+                {
+                    type: 'list',
+                    name: 'addEmp',
+                    message: 'Would you like to add an Engineer, Intern, or Finish with team building?',
+                    choices: ['Engineer', 'Intern', 'Finish']  
+                },
+            ])
+            .then(data => {
+                if (data.addEmp == 'Engineer') {
+                    inquirer 
+                        .prompt([
+                            {
+                                type: 'input',
+                                name: 'name',
+                                message: 'What is the name of this Engineer?',
+                            },
+                            {
+                                type: 'input',
+                                name: 'id',
+                                message: 'What is the id of this Engineer?',
+                            },
+                            {
+                                type: 'input',
+                                name: 'id',
+                                message: 'What is the id of this Engineer?',
+                            },
+                            {
+                                type: 'input',
+                                name: 'email',
+                                message: 'What is the email of this Engineer?',
+                            },
+                            {
+                                type: 'confirm',
+                                name: 'role',
+                                message: 'You are adding an Engineer, correct?',
+                                default: Engineer.getRole()
+                            },
+                            {
+                                type: 'input',
+                                name: 'github',
+                                message: 'What is the Github of this Engineer?',
+                            },
+                        ])
+                        .then(data => {
+                            const engineer = new Engineer(data.name, data.id, data.email, data.role, data.github);
+                            team.push(engineer);
+                        })
+                } else if (data.addEmp == 'Intern') {
+                    inquirer 
+                        .prompt([
+                            {
+                                type: 'input',
+                                name: 'name',
+                                message: 'What is the name of this Intern?',
+                            },
+                            {
+                                type: 'input',
+                                name: 'id',
+                                message: 'What is the id of this Intern?',
+                            },
+                            {
+                                type: 'input',
+                                name: 'id',
+                                message: 'What is the id of this Intern?',
+                            },
+                            {
+                                type: 'input',
+                                name: 'email',
+                                message: 'What is the email of this Intern?',
+                            },
+                            {
+                                type: 'confirm',
+                                name: 'role',
+                                message: 'You are adding an Intern, correct?',
+                                default: Intern.getRole()
+                            },
+                            {
+                                type: 'input',
+                                name: 'school',
+                                message: 'What is the Github of this Intern?',
+                            },
+                        ])
+                        .then(data => {
+                            const intern = new Intern(data.name, data.id, data.email, data.role, data.school);
+                            team.push(intern);
+                        })
+                } else {
+                    return 'You have chosen to not add any employees.'
+                    //console.log('You have chosen to not add any employees.');
+                    //return false;
+                }
+            })
+        }
+    // )}
 
