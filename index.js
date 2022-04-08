@@ -12,7 +12,7 @@ let team = [];
 
 //managerQuestions
 const managerQuestions = () => {
-    return new Promise((resolve, reject) => {
+    //return new Promise((resolve, reject) => {
         inquirer
             .prompt([
                 {
@@ -71,23 +71,22 @@ const managerQuestions = () => {
             .then(data => {
                 const manager = new Manager(data.name, data.id, data.email, data.role, data.officeNum);
                 team.push(manager);
-                resolve();
+                // resolve();
             })
-        })
+        // })
     }
 
 //employeeQuestions
-const employeeQuestions = () => {
-    return new Promise((resolve, reject) => {
-        inquirer
-            .prompt([
-                {
-                    type: 'list',
-                    name: 'addEmp',
-                    message: 'Would you like to add an Engineer, Intern, or Finish with team building?',
-                    choices: ['Engineer', 'Intern', 'Finish']
-
-                }
-            ])
-    })}
+// const employeeQuestions = () => {
+//     return new Promise((resolve, reject) => {
+//         inquirer
+//             .prompt([
+//                 {
+//                     type: 'list',
+//                     name: 'addEmp',
+//                     message: 'Would you like to add an Engineer, Intern, or Finish with team building?',
+//                     choices: ['Engineer', 'Intern', 'Finish']  
+//                 },
+//             ])
+//     })}
 
