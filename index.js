@@ -62,7 +62,7 @@ const managerQuestions = () => {
     ])
     .then(data => {
         const manager = new Manager(data.name, data.id, data.email, data.role, data.officeNum);
-        teamData.manager.push(manager);
+        teamData.push(manager);
     })
 }
 
@@ -161,15 +161,16 @@ const employeeQuestions = () => {
                     when: ({ addEmp }) => addEmp === 'Intern'
                 },
                 {
+                    name: 'finish',
                     message: 'You are done building your Team!',
                     when: ({ addEmp }) => addEmp === 'Finish'
                 },
-                {
-                    type: 'confirm',
-                    name: 'feature',
-                    message: 'Would you like to add another employee?',
-                    default: false
-                },
+                // {
+                //     type: 'confirm',
+                //     name: 'feature',
+                //     message: 'Would you like to add another employee?',
+                //     default: false
+                // },
                 {
                     type: 'confirm',
                     name: 'confirmAddEmployee',
@@ -178,30 +179,58 @@ const employeeQuestions = () => {
                 }
     ])
     .then(empData => {
-        teamData.employee.push(empData);
-        
-        if(empData.confirmAddEmployee) {
+        if (empData.addEmp) {
+            switch (empData.addEmp) {
+                case 'Engineer':
+                    const engineer = new Engineer(empData.name, empData.id, empData.email, empData.role, empData.github);
+                    teamData.employee.push(engineer);
+                    break;
+                case 'Intern':
+                    const intern = new Intern(empData.name, empData.id, empData.email, empData.role, empData.school);
+                    teamData.employee.push(intern);
+                    break;
+                // case 'Finish':
+                //     teamData.employee.push('');
+                //     break; 
+            } 
+            // return employeeQuestions().then();
+        } else if (empData.addEmp.confirmAddEmployee == 'Y' || empData.addEmp.confirmAddEmployee == 'y') {
             return employeeQuestions(teamData);
         } else {
-            return teamData;
+            return 'You are done building your Team!';
+        }
+    })
+}
+
+//create a function to write README file
+function writeToFile(fileName, data) {
+    return fs.writeFile(`${fileName}`, `${data}`, (err) => {
+        if(err) {
+            console.log(err);
+        } else {
+            console.log('Your index.html has been generated!');
         }
     });
-};
+}
+
 managerQuestions()
     .then(employeeQuestions)
-    .then(teamData => {
-        return generateHTML(teamData);
+    .then((data) => {
+        return writeToFile("./dist/index.html", generateHTML(data));
     })
-    .then(pageHTML => {
-        return writeFile(pageHTML);
-    })
-    .then(writeFileResponse => {
-    console.log(writeFileResponse);
-    return copyFile();
-    })
-    .then(copyFileResponse => {
-    console.log(copyFileResponse);
-    })
+    // .then(({ teamData }) => {
+    //     return generateHTML(${teamData});
+    // })
+    // .then(pageHTML => {
+    //     return writeFile(pageHTML);
+    // })
+    // .then(writeFileResponse => {
+    // console.log(writeFileResponse);
+    // return copyFile();
+    // })
+    // .then(copyFileResponse => {
+    // console.log(copyFileResponse);
+    // })
     .catch(err => {
     console.log(err);
     });
@@ -218,16 +247,7 @@ managerQuestions()
         //     })
         // }
 
-//Create a function to write README file
-// function writeToFile(fileName, data) {
-//     return fs.writeFile(`${fileName}`, `${data}`, (err) => {
-//         if(err) {
-//             console.log(err);
-//         } else {
-//             console.log('Your index.html has been generated!');
-//         }
-//     });
-// }
+
 
 //Create a function to initialize app
 // function init() {
