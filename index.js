@@ -86,27 +86,27 @@ const managerQuestions = [
     // }
 
 //employeeQuestions
-// const employeeQuestions = [
+const employeeQuestions = [
 // // const employeeQuestions = () => {
 // //     // return new Promise((resolve, reject) => {
-// //         inquirer
-// //             .prompt([
-//                 {
-//                     type: 'list',
-//                     name: 'addEmp',
-//                     message: 'Would you like to add an Engineer, Intern, or Finish with team building?',
-//                     choices: ['Engineer', 'Intern', 'Finish']  
-//                 },
-//             ])
+        // inquirer
+        //     .prompt([
+                {
+                    type: 'list',
+                    name: 'addEmp',
+                    message: 'Would you like to add an Engineer, Intern, or Finish with team building?',
+                    choices: ['Engineer', 'Intern', 'Finish']  
+                },
+            // ])
 //             .then(data => {
 //                 if (data.addEmp == 'Engineer') {
 //                     inquirer 
 //                         .prompt([
-//                             {
-//                                 type: 'input',
-//                                 name: 'name',
-//                                 message: 'What is the name of this Engineer?',
-//                             },
+                            {
+                                type: 'input',
+                                name: 'name',
+                                message: 'What is the name of this Engineer?',
+                            },
 //                             {
 //                                 type: 'input',
 //                                 name: 'id',
@@ -141,11 +141,11 @@ const managerQuestions = [
 //                 } else if (data.addEmp == 'Intern') {
 //                     inquirer 
 //                         .prompt([
-//                             {
-//                                 type: 'input',
-//                                 name: 'name',
-//                                 message: 'What is the name of this Intern?',
-//                             },
+                            {
+                                type: 'input',
+                                name: 'name',
+                                message: 'What is the name of this Intern?',
+                            },
 //                             {
 //                                 type: 'input',
 //                                 name: 'id',
@@ -182,7 +182,7 @@ const managerQuestions = [
 //                     //console.log('You have chosen to not add any employees.');
 //                     //return false;
 //                 }
-//             ]
+            ]
         //     })
         // }
 
@@ -200,6 +200,7 @@ function writeToFile(fileName, data) {
 // TODO: Create a function to initialize app
 function init() {
     inquirer.prompt(managerQuestions)
+        .then(employeeQuestions)
         .then((data) => {
             return writeToFile("./dist/index.html", generateHTML(data));
         })
