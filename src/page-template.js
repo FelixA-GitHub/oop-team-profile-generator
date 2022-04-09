@@ -14,6 +14,7 @@ function generateHTML(data) {
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Fizzy Fresh Productions</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        <script src="https://kit.fontawesome.com/93c8388c97.js" crossorigin="anonymous"></script>
     </head>
     <body>
     <section class="section">
@@ -27,10 +28,10 @@ function generateHTML(data) {
         </div>
         <div class="column is-one-third">
             <div class="card">
-                <div class="card-content">
+                <div class="card-header">
                     <div class="media-content has-text-centered">
                         <p class="title is-4">${data.name}</p>
-                        <p class="subtitle is-6">${data.role}</p>
+                        <p class="subtitle is-6"><i class="fa-solid fa-mug-hot"></i> ${data.role}</p>
                     </div>
                 </div>
 

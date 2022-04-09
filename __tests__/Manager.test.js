@@ -15,6 +15,6 @@ test('checks if getRole() overrides to Manager', () => {
 //tests if office number is inputted
 test('checks if office number is inputted', () => {
     const testOffNum = '888-888-8888';
-    const man = new Manager('Felix', 123, 'elmalogato@hotmail.com', 'Manager',testOffNum);
-    expect(man.offNum).toBe(testOffNum);
+    const man = new Manager('Felix', 123, 'elmalogato@hotmail.com', 'Manager', testOffNum);
+    expect(man.officeNum).toBe(testOffNum);
 });
