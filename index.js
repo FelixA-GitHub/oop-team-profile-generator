@@ -2,13 +2,13 @@
 const Engineer = require("./lib/engineer");
 const Intern = require("./lib/intern");
 const Manager = require("./lib/manager");
-// const { writeFile, copyFile } = require('./utils/generate-site.js');
+const { writeFile, copyFile } = require('./utils/generate-site.js');
 const inquirer = require('inquirer');
 const generateHTML = require('./src/page-template');
 const fs = require('fs');
 
 
-let teamData = [];
+const teamData = [];
 
 //managerQuestions
 // const managerQuestions = [
@@ -194,7 +194,7 @@ const employeeQuestions = () => {
                 //     teamData.employee.push('');
                 //     break; 
             } 
-            // return employeeQuestions().then();
+            return employeePrompt().then(() => resolve());
         } else if (data.addEmp.confirmAddEmployee == 'Y' || data.addEmp.confirmAddEmployee == 'y') {
             return employeeQuestions(teamData);
         } else {
@@ -223,8 +223,8 @@ managerQuestions()
 //     return generateHTML(pageHTML);
 // })
 // .then(pageHTML => {
-    //     return writeFile(pageHTML);
-    // })
+//         return writeFile(pageHTML);
+//     })
     // .then(writeFileResponse => {
         // console.log(writeFileResponse);
         // return copyFile();
@@ -235,19 +235,6 @@ managerQuestions()
             .catch(err => {
                 console.log(err);
             });
-            //                         .then(data => {
-                //                             const intern = new Intern(data.name, data.id, data.email, data.role, data.school);
-                //                             team.push(intern);
-                //                         })
-                //                 } else {
-                    //                     return 'You have chosen to not add any employees.'
-                    //                     //console.log('You have chosen to not add any employees.');
-                    //                     //return false;
-                    //                 }
-                    // ]
-                    //     })
-                    // }
-                    
                     
                     
 // //Create a function to initialize app
