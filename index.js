@@ -1,11 +1,12 @@
 //packages need for this application
-const Manager = require("./lib/manager");
 const Engineer = require("./lib/engineer");
 const Intern = require("./lib/intern");
+const Manager = require("./lib/manager");
 // const { writeFile, copyFile } = require('./utils/generate-site.js');
 const inquirer = require('inquirer');
-const generatePage = require('./src/page-template');
+const generateHTML = require('./src/page-template');
 const fs = require('fs');
+
 
 let teamData = [];
 
@@ -199,11 +200,10 @@ const employeeQuestions = () => {
         } else {
             return 'You are done building your Team!';
         }
-        resolve();
     })
+    resolve();
 })}
-
-//create a function to write README file
+//create a function to write index.html file
 function writeToFile(fileName, data) {
     return fs.writeFile(`${fileName}`, `${data}`, (err) => {
         if(err) {
@@ -215,54 +215,54 @@ function writeToFile(fileName, data) {
 }
 
 managerQuestions()
-    .then(employeeQuestions)
-    .then(data => {
-        return writeToFile("./dist/index.html", generatePage(`${teamData}`, data));
-    })
-    // .then(({ teamData }) => {
-    //     return generateHTML(${teamData});
-    // })
-    // .then(pageHTML => {
+// .then(employeeQuestions)
+.then(data => {
+    return writeToFile("./dist/index.html", generateHTML(data));
+})
+// .then((pageHTML) => {
+//     return generateHTML(pageHTML);
+// })
+// .then(pageHTML => {
     //     return writeFile(pageHTML);
     // })
     // .then(writeFileResponse => {
-    // console.log(writeFileResponse);
-    // return copyFile();
-    // })
-    // .then(copyFileResponse => {
-    // console.log(copyFileResponse);
-    // })
-    .catch(err => {
-    console.log(err);
-    });
-//                         .then(data => {
-//                             const intern = new Intern(data.name, data.id, data.email, data.role, data.school);
-//                             team.push(intern);
-//                         })
-//                 } else {
-//                     return 'You have chosen to not add any employees.'
-//                     //console.log('You have chosen to not add any employees.');
-//                     //return false;
-//                 }
-            // ]
-        //     })
-        // }
-
-
-
-//Create a function to initialize app
+        // console.log(writeFileResponse);
+        // return copyFile();
+        // })
+        // .then(copyFileResponse => {
+            // console.log(copyFileResponse);
+            // })
+            .catch(err => {
+                console.log(err);
+            });
+            //                         .then(data => {
+                //                             const intern = new Intern(data.name, data.id, data.email, data.role, data.school);
+                //                             team.push(intern);
+                //                         })
+                //                 } else {
+                    //                     return 'You have chosen to not add any employees.'
+                    //                     //console.log('You have chosen to not add any employees.');
+                    //                     //return false;
+                    //                 }
+                    // ]
+                    //     })
+                    // }
+                    
+                    
+                    
+// //Create a function to initialize app
 // function init() {
 //     inquirer.prompt(managerQuestions)
 //         .then(employeeQuestions)
 //         .then((data) => {
-//             return writeToFile("./dist/index.html", generateHTML(data));
+//             return writeToFile("./dist/index.html", generatePage(data));
 //         })
 //         .catch(err => {
 //             console.log(err);
 //         })
 //     }
 
-//Function call to initialize app
+// //Function call to initialize app
 // init();
 
 
