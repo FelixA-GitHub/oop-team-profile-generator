@@ -1,38 +1,42 @@
 //packages need for this application
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
-const { writeFile, copyFile } = require('./utils/generate-site.js');
+const Manager = require("./lib/manager");
+const Engineer = require("./lib/engineer");
+const Intern = require("./lib/intern");
+// const { writeFile, copyFile } = require('./utils/generate-site.js');
 const inquirer = require('inquirer');
-const generateHTML = require('./src/page-template')
+const generatePage = require('./src/page-template');
+const fs = require('fs');
 
-const teamData = [];
+let teamData = [];
 
 //managerQuestions
 // const managerQuestions = [
 const managerQuestions = () => {
-    return inquirer.prompt([
-        {
-            type: 'confirm',
-            name: 'confirmManager',
-            message: 'Hello! Are you the Manager?',
-            default: true,
-            validate: input => {
-                if(input) {
-                    return true;
-                } else {
-                    console.log('Please confirm that you are the Manager!');
-                    return false;
-                };
-            }
-
-        },
+    //if no 'manager' array property, create one
+    if(!teamData.manager) {
+        teamData.manager = [];
+    }
+    return new Promise((resolve, reject) => {
+        inquirer.prompt([
         {
             type: 'input',
             name: 'name',
             message: 'What is your name?',
-            when: ({ confirmManager }) => confirmManager === true
+            
 
+        },
+        {
+            type: 'confirm',
+            name: 'confirmManager',
+            message: 'Hello! Are you the Manager?',
+            default: true
+        },
+        {
+            type: 'input',
+            name: 'role',
+            message: 'You are the Manager, correct?',
+            default: 'Manager',
+            when: ({ confirmManager }) => confirmManager === true
         },
         {
             type: 'input',
@@ -48,13 +52,6 @@ const managerQuestions = () => {
         },
         {
             type: 'input',
-            name: 'role',
-            message: 'You are the Manager, correct?',
-            default: 'Manager',
-            when: ({ confirmManager }) => confirmManager === true
-        },
-        {
-            type: 'input',
             name: 'officeNum',
             message: 'What is your office number?',
             when: ({ confirmManager }) => confirmManager === true
@@ -62,9 +59,10 @@ const managerQuestions = () => {
     ])
     .then(data => {
         const manager = new Manager(data.name, data.id, data.email, data.role, data.officeNum);
-        teamData.push(manager);
+        teamData.manager.push(manager);
+        resolve();
     })
-}
+})}
 
 //employeeQuestions
 // const employeeQuestions = [
@@ -79,7 +77,8 @@ const employeeQuestions = () => {
     if(!teamData.employee) {
         teamData.employee = [];
     }
-    return inquirer.prompt([
+    return new Promise((resolve, reject) => {
+        inquirer.prompt([
                 {
                     type: 'list',
                     name: 'addEmp',
@@ -161,6 +160,7 @@ const employeeQuestions = () => {
                     when: ({ addEmp }) => addEmp === 'Intern'
                 },
                 {
+                    type: 'input',
                     name: 'finish',
                     message: 'You are done building your Team!',
                     when: ({ addEmp }) => addEmp === 'Finish'
@@ -178,15 +178,15 @@ const employeeQuestions = () => {
                     default: false
                 }
     ])
-    .then(empData => {
-        if (empData.addEmp) {
-            switch (empData.addEmp) {
+    .then(data => {
+        if (data.addEmp) {
+            switch (data.addEmp) {
                 case 'Engineer':
-                    const engineer = new Engineer(empData.name, empData.id, empData.email, empData.role, empData.github);
+                    const engineer = new Engineer(data.name, data.id, data.email, data.role, data.github);
                     teamData.employee.push(engineer);
                     break;
                 case 'Intern':
-                    const intern = new Intern(empData.name, empData.id, empData.email, empData.role, empData.school);
+                    const intern = new Intern(data.name, data.id, data.email, data.role, data.school);
                     teamData.employee.push(intern);
                     break;
                 // case 'Finish':
@@ -194,13 +194,14 @@ const employeeQuestions = () => {
                 //     break; 
             } 
             // return employeeQuestions().then();
-        } else if (empData.addEmp.confirmAddEmployee == 'Y' || empData.addEmp.confirmAddEmployee == 'y') {
+        } else if (data.addEmp.confirmAddEmployee == 'Y' || data.addEmp.confirmAddEmployee == 'y') {
             return employeeQuestions(teamData);
         } else {
             return 'You are done building your Team!';
         }
+        resolve();
     })
-}
+})}
 
 //create a function to write README file
 function writeToFile(fileName, data) {
@@ -215,8 +216,8 @@ function writeToFile(fileName, data) {
 
 managerQuestions()
     .then(employeeQuestions)
-    .then((data) => {
-        return writeToFile("./dist/index.html", generateHTML(data));
+    .then(data => {
+        return writeToFile("./dist/index.html", generatePage(`${teamData}`, data));
     })
     // .then(({ teamData }) => {
     //     return generateHTML(${teamData});
