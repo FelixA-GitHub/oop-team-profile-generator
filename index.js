@@ -4,7 +4,7 @@ const Intern = require("./lib/intern");
 const Manager = require("./lib/manager");
 const { writeFile, copyFile } = require('./utils/generate-site.js');
 const inquirer = require('inquirer');
-const generateHTML = require('./src/page-template');
+const { generateHTML } = require('./src/page-template');
 const fs = require('fs');
 
 
@@ -260,7 +260,7 @@ employeeQuestions()
 //     return writeToFile("./dist/index.html", generateHTML({data}));
 // })
     .then(teamData => {
-        return generateHTML(teamData);
+        return generateHTML({teamData});
     })
     .then(pageHTML => {
             return writeFile(pageHTML);

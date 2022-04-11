@@ -1,10 +1,6 @@
 const fs = require('fs');
 
 const writeFile = fileContent => {
-    //new creates new Promise object which acts like a container
-    //that allows us to run code that at some point will be pending
-    //or 'waiting for a response'
-    //useful for http requests like fetch() or setTimeout()
     return new Promise((resolve, reject) => {
         fs.writeFile('./dist/index.html', fileContent, err => {
           // if there's an error, reject the Promise and send the error to the Promise's `.catch()` method
@@ -23,9 +19,9 @@ const writeFile = fileContent => {
       });
     };
 
-const copyFile = () => {
+const copyFile = fileContent => {
     return new Promise((resolve, reject) => {
-        fs.copyFile('./dist/index.html', fileContent, err => {
+        fs.copyFile('./dist/index.html', `${fileContent}`, err => {
             // if there's an error, reject the Promise and send the error to the Promise's `.catch()` method
             if (err) {
               reject(err);

@@ -3,6 +3,7 @@
 // const Engineer = require('./lib/engineer');
 // const Intern = require('./lib/intern');
 // const Manager = require('./lib/manager');
+const fs = require('fs');
 
 
 function generateHTML(data) {
@@ -50,10 +51,10 @@ function generateHTML(data) {
         </div>
     </section>
 
-    <script src="/index.js"></script>
+    <script type="module" src="/index.js"></script>
     </body>
     </html>
     `
 }
 
-module.exports = generateHTML;
+module.exports = { generateHTML };

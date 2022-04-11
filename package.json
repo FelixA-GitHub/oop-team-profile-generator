@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "directories": {
-    "lib": "lib"
+    "lib": "lib",
+    "src": "src",
+    "utils": "utils",
+    "dist": "dist"
   },
   "scripts": {
     "test": "jest"
