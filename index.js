@@ -8,66 +8,67 @@ const generateHTML = require('./src/page-template');
 const fs = require('fs');
 
 
-const teamData = [];
+// const teamData = [];
 
 //managerQuestions
 // const managerQuestions = [
-const managerQuestions = () => {
-    //if no 'manager' array property, create one
-    if(!teamData.manager) {
-        teamData.manager = [];
-    }
-    return new Promise((resolve, reject) => {
-        inquirer.prompt([
-        {
-            type: 'input',
-            name: 'name',
-            message: 'What is your name?',
+// const managerQuestions = () => {
+//     //if no 'manager' array property, create one
+//     if(!teamData.manager) {
+//         teamData.manager = [];
+//     }
+//     return new Promise((resolve, reject) => {
+//         inquirer.prompt([
+//         {
+//             type: 'input',
+//             name: 'name',
+//             message: 'What is your name?',
             
 
-        },
-        {
-            type: 'confirm',
-            name: 'confirmManager',
-            message: 'Hello! Are you the Manager?',
-            default: true
-        },
-        {
-            type: 'input',
-            name: 'role',
-            message: 'You are the Manager, correct?',
-            default: 'Manager',
-            when: ({ confirmManager }) => confirmManager === true
-        },
-        {
-            type: 'input',
-            name: 'id',
-            message: 'What is your employee ID?',
-            when: ({ confirmManager }) => confirmManager === true
-        },
-        {
-            type: 'input',
-            name: 'email',
-            message: 'What is your email?',
-            when: ({ confirmManager }) => confirmManager === true
-        },
-        {
-            type: 'input',
-            name: 'officeNum',
-            message: 'What is your office number?',
-            when: ({ confirmManager }) => confirmManager === true
-        }
-    ])
-    .then(data => {
-        const manager = new Manager(data.name, data.id, data.email, data.role, data.officeNum);
-        teamData.manager.push(manager);
-        resolve();
-    })
-})}
+//         },
+//         {
+//             type: 'confirm',
+//             name: 'confirmManager',
+//             message: 'Hello! Are you the Manager?',
+//             default: true
+//         },
+//         {
+//             type: 'input',
+//             name: 'role',
+//             message: 'You are the Manager, correct?',
+//             default: 'Manager',
+//             when: ({ confirmManager }) => confirmManager === true
+//         },
+//         {
+//             type: 'input',
+//             name: 'id',
+//             message: 'What is your employee ID?',
+//             when: ({ confirmManager }) => confirmManager === true
+//         },
+//         {
+//             type: 'input',
+//             name: 'email',
+//             message: 'What is your email?',
+//             when: ({ confirmManager }) => confirmManager === true
+//         },
+//         {
+//             type: 'input',
+//             name: 'officeNum',
+//             message: 'What is your office number?',
+//             when: ({ confirmManager }) => confirmManager === true
+//         }
+//     ])
+//     // .then(data => {
+//     //     const manager = new Manager(data.name, data.id, data.email, data.role, data.officeNum);
+//     //     teamData.manager.push(manager);
+//     //     resolve();
+//     // })
+    
+// })}
 
 //employeeQuestions
 // const employeeQuestions = [
-const employeeQuestions = () => {
+const employeeQuestions = teamData => {
     console.log(`
     ==================
     Add a New Employee
@@ -75,16 +76,52 @@ const employeeQuestions = () => {
     `);
 
     //if no 'employees' array property, create one
-    if(!teamData.employee) {
-        teamData.employee = [];
+    if(!teamData) {
+        teamData = [];
     }
-    return new Promise((resolve, reject) => {
-        inquirer.prompt([
+    return inquirer.prompt([
                 {
                     type: 'list',
                     name: 'addEmp',
-                    message: 'Would you like to add an Engineer, Intern, or Finish with team building?',
-                    choices: ['Engineer', 'Intern', 'Finish']  
+                    message: 'Would you like to add a Manager, an Engineer, an Intern, or Finish with team building?',
+                    choices: ['Manager','Engineer', 'Intern', 'Finish']  
+                },
+                {
+                    type: 'input',
+                    name: 'name',
+                    message: 'What is the name of this Manager?',
+                    when: ({ addEmp }) => addEmp === 'Manager'
+                },
+                {
+                    type: 'input',
+                    name: 'id',
+                    message: 'What is the id of this Manager?',
+                    when: ({ addEmp }) => addEmp === 'Manager'
+                },
+                {
+                    type: 'input',
+                    name: 'id',
+                    message: 'What is the id of this Manager?',
+                    when: ({ addEmp }) => addEmp === 'Manager'
+                },
+                {
+                    type: 'input',
+                    name: 'email',
+                    message: 'What is the email of this Manager?',
+                    when: ({ addEmp }) => addEmp === 'Manager'
+                },
+                {
+                    type: 'confirm',
+                    name: 'role',
+                    message: 'You are adding an Manager, correct?',
+                    default: 'Manager',
+                    when: ({ addEmp }) => addEmp === 'Manager'
+                },
+                {
+                    type: 'input',
+                    name: 'officeNum',
+                    message: 'What is the office number of this Manager?',
+                    when: ({ addEmp }) => addEmp === 'Manager'
                 },
                 {
                     type: 'input',
@@ -180,62 +217,65 @@ const employeeQuestions = () => {
                 }
     ])
     .then(data => {
-        if (data.addEmp) {
-            switch (data.addEmp) {
+        if (data) {
+            switch (data) {
                 case 'Engineer':
                     const engineer = new Engineer(data.name, data.id, data.email, data.role, data.github);
-                    teamData.employee.push(engineer);
+                    teamData.push(engineer);
                     break;
                 case 'Intern':
                     const intern = new Intern(data.name, data.id, data.email, data.role, data.school);
-                    teamData.employee.push(intern);
+                    teamData.push(intern);
+                    break;
+                case 'Manager':
+                    const manager = new Manager(data.name, data.id, data.email, data.role, data.school);
+                    teamData.push(manager);
                     break;
                 // case 'Finish':
                 //     teamData.employee.push('');
                 //     break; 
             } 
-            return employeePrompt().then(() => resolve());
-        } else if (data.addEmp.confirmAddEmployee == 'Y' || data.addEmp.confirmAddEmployee == 'y') {
+        } else if (data.confirmAddEmployee) {
             return employeeQuestions(teamData);
         } else {
-            return 'You are done building your Team!';
+            console.log('You are done building your team!');
+            return teamData;
         }
     })
-    resolve();
-})}
-//create a function to write index.html file
-function writeToFile(fileName, data) {
-    return fs.writeFile(`${fileName}`, `${data}`, (err) => {
-        if(err) {
-            console.log(err);
-        } else {
-            console.log('Your index.html has been generated!');
-        }
-    });
 }
+//create a function to write index.html file
+// function writeToFile(fileName, data) {
+//     return fs.writeFile(`${fileName}`, `${data}`, (err) => {
+//         if(err) {
+//             console.log(err);
+//         } else {
+//             console.log('Your index.html has been generated!');
+//         }
+//     });
+// }
 
-managerQuestions()
-// .then(employeeQuestions)
-.then(data => {
-    return writeToFile("./dist/index.html", generateHTML(data));
-})
-// .then((pageHTML) => {
-//     return generateHTML(pageHTML);
+// managerQuestions()
+employeeQuestions()
+// .then(data => {
+//     return writeToFile("./dist/index.html", generateHTML({data}));
 // })
-// .then(pageHTML => {
-//         return writeFile(pageHTML);
-//     })
-    // .then(writeFileResponse => {
-        // console.log(writeFileResponse);
-        // return copyFile();
-        // })
-        // .then(copyFileResponse => {
-            // console.log(copyFileResponse);
-            // })
-            .catch(err => {
-                console.log(err);
-            });
-                    
+    .then(teamData => {
+        return generateHTML(teamData);
+    })
+    .then(pageHTML => {
+            return writeFile(pageHTML);
+        })
+    .then(writeFileResponse => {
+        console.log(writeFileResponse);
+        return copyFile();
+    })
+    .then(copyFileResponse => {
+        console.log(copyFileResponse);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+            
                     
 // //Create a function to initialize app
 // function init() {
