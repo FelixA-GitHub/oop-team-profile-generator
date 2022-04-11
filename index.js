@@ -218,7 +218,8 @@ const employeeQuestions = teamData => {
     ])
     .then(data => {
         if (data) {
-            switch (data) {
+            console.log(data);
+            switch (data.addEmp) {
                 case 'Engineer':
                     const engineer = new Engineer(data.name, data.id, data.email, data.role, data.github);
                     teamData.push(engineer);
