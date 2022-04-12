@@ -2,7 +2,7 @@
 const Engineer = require("./lib/engineer");
 const Intern = require("./lib/intern");
 const Manager = require("./lib/manager");
-const { writeFile, copyFile } = require('./utils/generate-site.js');
+const { writeToFile, copyToFile } = require('./utils/generate-site.js');
 const inquirer = require('inquirer');
 const { generateHTML } = require('./src/page-template');
 const fs = require('fs');
@@ -240,6 +240,7 @@ const employeeQuestions = teamData => {
             return employeeQuestions(teamData);
         } else {
             console.log('You are done building your team!');
+            console.log(teamData);
             return teamData;
         }
     })
@@ -260,15 +261,15 @@ employeeQuestions()
 // .then(data => {
 //     return writeToFile("./dist/index.html", generateHTML({data}));
 // })
-    .then(teamData => {
-        return generateHTML({teamData});
+    .then((data) => {
+        return generateHTML(data);
     })
     .then(pageHTML => {
-            return writeFile(pageHTML);
+            return writeToFile(pageHTML);
         })
     .then(writeFileResponse => {
         console.log(writeFileResponse);
-        return copyFile();
+        return copyToFile();
     })
     .then(copyFileResponse => {
         console.log(copyFileResponse);
