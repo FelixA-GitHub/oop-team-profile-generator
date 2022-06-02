@@ -29,3 +29,19 @@ THEN I exit the application, and the HTML is generated
 ```
 
 ## Mockup
+
+<!-- ![README.md Screenshot](./img/Screen%20Shot%20README.png) -->
+
+## Questions:
+
+GitHub:
+
+https://github.com/FelixA-GitHub
+
+Heroku:
+
+https://fizzy-note-taker.herokuapp.com
+
+If you have additional questions, you can reach me at:
+
+Felix.Acevedo.Tech@gmail.com
